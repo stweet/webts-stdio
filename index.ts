@@ -1,3 +1,6 @@
+export interface IStdioRule {
+    test(value: string): boolean
+}
 
 /**
  * 
@@ -21,7 +24,7 @@ export interface IStdioField {
     val?: string
     
     /** Правило для значения. */
-    rule?: RegExp
+    rule?: RegExp | IStdioRule
 }
 
 /**
@@ -50,7 +53,7 @@ export class StdioField implements IStdioField {
     public skip: boolean = true
     public def: string = ''
     public val: string = ''
-    public rule: RegExp = /\S{1,}/
+    public rule: RegExp | IStdioRule = /\S{1,}/
 
     public constructor(fid: string, label: string) {
         this.fid = fid
