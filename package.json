@@ -1,0 +1,26 @@
+{
+  "name": "webts-stdio",
+  "version": "1.0.0",
+  "description": "I don't know what to call it.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stweet/webts-stdio.git"
+  },
+  "keywords": [
+    "typescript"
+  ],
+  "author": "stweet",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stweet/webts-stdio/issues"
+  },
+  "homepage": "https://github.com/stweet/webts-stdio#readme",
+  "devDependencies": {
+    "@types/node": "^10.5.1",
+    "@types/typescript": "^2.0.0"
+  }
+}
