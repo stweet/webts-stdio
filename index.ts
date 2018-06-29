@@ -1,11 +1,11 @@
+
+/** Инсрукция обработки полей. */
 export interface IStdioRule {
-    test(value: string): boolean
+    
+    test (value: string): boolean
 }
 
-/**
- * 
- * Инструкции к полю.
- */
+/** Инструкции к полю. */
 export interface IStdioField {
     
     /** Индентификатор поля для поска по ключу */
@@ -27,10 +27,7 @@ export interface IStdioField {
     rule?: RegExp | IStdioRule
 }
 
-/**
- * 
- * Инструкции к форме
- */
+/** Инструкции к форме */
 export interface IStdioForm {
     
     /** Этап выполнения */
@@ -43,9 +40,7 @@ export interface IStdioForm {
     render: Function
 }
 
-/**
- * 
- */
+/** */
 export class StdioField implements IStdioField {
 
     public fid: string
@@ -61,9 +56,7 @@ export class StdioField implements IStdioField {
     }
 }
 
-/**
- * 
- */
+/** */
 export class StdioForm implements IStdioForm {
     
     private _status: number = 0
@@ -110,9 +103,13 @@ export class StdioForm implements IStdioForm {
 
     private checkValue(input: string): boolean {
         let field: IStdioField = this.fields[this.status]
-        if (input.length == 0 && field.skip == true) return false
-        if (field.rule && !field.rule.test(input)) return false
-        return true
+        
+        if ((input.length == 0 && field.skip == true) || 
+            (field.rule && field.rule.test(input))) {
+            return true
+        }
+
+        return false
     }
 
     private onData(buffer: Buffer): void {

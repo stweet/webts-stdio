@@ -1,7 +1,7 @@
 # webts-stdio
 Юзаем как то так:
 ```javascript
-import { StdioForm, IStdioField, StdioField } from "./stdio"
+import { StdioForm, IStdioField, StdioField, IStdioRule } from "."
 
 /**
  * Обработчик входных данных.
@@ -9,8 +9,23 @@ import { StdioForm, IStdioField, StdioField } from "./stdio"
  * @param fields 
  */
 function render(fields: IStdioField[]): void {
-    console.table(fields, ['label', 'val'])
+    // "console.table" only node v10.x and ^
+    console.table(fields, ['label', 'val']) 
     process.exit(0)
+}
+
+/** Передаём обработку поля. */
+let rule: IStdioRule = {
+    
+    test: value => {
+        
+        if (/\w+@\w+\.\w{2,}/.test(value)) {
+            return true
+        }
+
+        console.log('!Invalid email!')
+        return false
+    }
 }
 
 /** Собственно сам виновник торжества. */
@@ -21,8 +36,8 @@ form.render = render
 
 /** Произвольное поле. */
 let field: StdioField = new StdioField('email', "Enter your email")
-    field.rule = /\w+@\w+\.\w{2,}/
     field.skip = false
+    field.rule = rule
 form.addField(field)
 
 /** А можно добавить поле и так. */
