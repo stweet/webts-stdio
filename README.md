@@ -1,18 +1,44 @@
 # webts-stdio
 Юзаем как то так:
 ```javascript
-import { StdioForm, IStdioField, StdioField, IStdioRule } from "."
+import { StdioForm } from "."
 
-/**
- * Обработчик входных данных.
- * 
- * @param fields 
- */
-function render(fields: IStdioField[]): void {
+/** Собственно сам виновник торжества. */
+let form: StdioForm = new StdioForm()
+
+/** Добавляем поле. */
+form.createField('login', 'Enter your login')
+
+/** Ожидаем пользовательский ввод. */
+form.listen()
+```
+Можно использовать собственные поля
+```javascript
+import { StdioForm, IStdioField, StdioField } from "."
+
+let field: IStdioField = new StdioField('email', "Enter your email")
+    field.rule = /\w+@\w+\.\w{2,}/
+    field.skip = false
+
+let form: StdioForm = new StdioForm()
+    form.addField(field)
+    form.listen()
+```
+Собственный обработчик вывода
+```javascript
+import { IStdioForm, StdioForm, IStdioField } from "."
+
+let form: IStdioForm = new StdioForm()
+
+/** Определяем обработчика вывода. */
+form.render = (fields: IStdioField[]) => {
     // "console.table" only node v10.x and ^
-    console.table(fields, ['label', 'val']) 
-    process.exit(0)
-}
+    console.table(fields, ['label', 'val'])
+} 
+```
+А так же обрабатывать кастомные поля
+```javascript
+import { IStdioRule, IStdioField, StdioField } from "."
 
 /** Передаём обработку поля. */
 let rule: IStdioRule = {
@@ -28,21 +54,6 @@ let rule: IStdioRule = {
     }
 }
 
-/** Собственно сам виновник торжества. */
-let form: StdioForm = new StdioForm()
-
-/** Определяем обработчика вывода. */
-form.render = render 
-
-/** Произвольное поле. */
-let field: StdioField = new StdioField('email', "Enter your email")
-    field.skip = false
+let field: IStdioField = new StdioField('email', "Enter your email")
     field.rule = rule
-form.addField(field)
-
-/** А можно добавить поле и так. */
-form.createField('login', 'Enter your login')
-
-/** Слушаем консольку. */
-form.listen()
 ```
