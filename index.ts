@@ -15,16 +15,16 @@ export interface IStdioField {
     label: string
 
     /** Разрешение на пропуск. */
-    skip?: boolean
+    skip: boolean
 
     /** Исходное значение. */
-    def?: string
+    def: string
     
     /** Входящее значение. */
-    val?: string
+    val: string
     
     /** Правило для значения. */
-    rule?: RegExp | IStdioRule
+    rule: RegExp | IStdioRule
 }
 
 /** Инструкции к форме */
@@ -37,7 +37,7 @@ export interface IStdioForm {
     fields: IStdioField[]
 
     /** Обработчик вывода. */
-    render: Function
+    handler: Function
 }
 
 /** */
@@ -61,7 +61,7 @@ export class StdioForm implements IStdioForm {
     
     private _status: number = 0
     private _fields: IStdioField[] = []
-    private _render: Function = console.table
+    private _handler: Function = console.table
 
     private onListen: boolean = false
 
@@ -73,12 +73,12 @@ export class StdioForm implements IStdioForm {
         return this._fields
     }
 
-    get render(): Function {
-        return this._render
+    get handler(): Function {
+        return this._handler
     }
 
-    set render (render: Function) {
-        this._render = render
+    set handler (handler: Function) {
+        this._handler = handler
     }
 
     public createField(fid: string, label: string): IStdioField {
@@ -133,7 +133,7 @@ export class StdioForm implements IStdioForm {
 
         if (this.status === this.fields.length) {
             process.stdin.removeAllListeners('data')
-            this.render.call(this, this.fields)
+            this.handler.call(this, this.fields)
         } else {
             this.write(this.fields[this.status].label)
         }

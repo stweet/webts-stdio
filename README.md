@@ -31,7 +31,7 @@ import { IStdioForm, StdioForm, IStdioField } from "."
 let form: IStdioForm = new StdioForm()
 
 /** Определяем обработчика вывода. */
-form.render = (fields: IStdioField[]) => {
+form.handler = (fields: IStdioField[]) => {
     // "console.table" only node v10.x and ^
     console.table(fields, ['label', 'val'])
 } 
